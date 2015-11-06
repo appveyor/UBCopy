@@ -189,6 +189,8 @@ namespace UBCopy
             var pctinc = 0.0;
             var progress = pctinc;
 
+            int currentPercent = 0;
+
             //progress stuff
             if (_reportprogress)
             {
@@ -215,11 +217,11 @@ namespace UBCopy
 
                     if (_reportprogress && !IsDebugEnabled)
                     {
-                        Console.SetCursorPosition(_origCol, _origRow);
-                        if (progress < 101 - pctinc)
+                        int percent = (int)Math.Round((float)_totalbyteswritten / (float)_infilesize * 100);
+                        if ((percent - currentPercent) >= 1)
                         {
-                            progress = progress + pctinc;
-                            Console.Write("%{0}", Math.Round(progress, 0));
+                            currentPercent = percent;
+                            Console.Write("\r{0}%", currentPercent);
                         }
                     }
                 }
@@ -347,6 +349,7 @@ namespace UBCopy
                     }
                     else
                     {
+                        //CopyBufferSize = buffersize * 1048576;
                         CopyBufferSize = bytessecond;
                         _throttling = true;
                     }

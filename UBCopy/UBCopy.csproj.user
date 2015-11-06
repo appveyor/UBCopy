@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <StartArguments>-s=k:\downloads -d=c:\ -o=true -b=8 -c=false -m=false -t=8 -z=32 -l=1310720</StartArguments>
+    <StartArguments>-s="C:\Users\Public\Documents\Hyper-V\Virtual hard disks\Windows81.vhdx" -d="C:\Users\Public\Documents\Hyper-V\Virtual hard disks\Windows81---copy.vhdx" -o=true -b=8 -c=false -m=false -t=8 -z=32 -l=31457280 -r=true</StartArguments>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <StartArguments>-s=k:\downloads\SQL2000-KB884525-SP4-x86-ENU.EXE -d=c:\delme.zip -o=true -c=false -r=true -b=1</StartArguments>
