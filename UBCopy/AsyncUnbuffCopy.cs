@@ -104,7 +104,7 @@ namespace UBCopy
             //open input file
             try
             {
-                _infile = new FileStream(_inputfile, FileMode.Open, FileAccess.Read, FileShare.None, CopyBufferSize,
+                _infile = new FileStream(_inputfile, FileMode.Open, FileAccess.Read, FileShare.Read, CopyBufferSize,
                                          FileFlagNoBuffering | FileOptions.SequentialScan);
             }
             catch (Exception e)

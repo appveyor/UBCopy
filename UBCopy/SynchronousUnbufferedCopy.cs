@@ -31,7 +31,7 @@ namespace UBCopy
             try
             {
                 infile = new FileStream(inputfile,
-                                            FileMode.Open, FileAccess.Read, FileShare.None, buffersize,
+                                            FileMode.Open, FileAccess.Read, FileShare.Read, buffersize,
                                             FileFlagNoBuffering | FileOptions.SequentialScan);
 
             }
