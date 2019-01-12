@@ -38,6 +38,8 @@ namespace UBCopy
 
         public static Stack<string> FileList = new Stack<string>(50000);
 
+        public static Stack<FileToFolder> FileToFolderList = new Stack<FileToFolder>(50000);        
+
         //hold command line options
         //public static string Sourcefile;
         public static string Destinationfile;
@@ -62,6 +64,9 @@ namespace UBCopy
         /// <param name="root"></param>
         public static void TraverseTree(string root)
         {
+            string[] destinationFolderList = Destinationfile.Contains(",") || Destinationfile.Contains(";") ? Destinationfile.Split(new char[] { ',', ';' }, StringSplitOptions.RemoveEmptyEntries)
+                : new string[] { Destinationfile };
+
             var dirs = new Stack<string>(20);
 
             if (!Directory.Exists(root))
@@ -116,6 +121,12 @@ namespace UBCopy
                         try
                         {
                             FileList.Push(file);
+                            
+                            foreach (var folder in destinationFolderList)
+                            {
+                                FileToFolderList.Push(new FileToFolder(file, folder));
+                            }
+
                         }
                         catch (FileNotFoundException)
                         {
@@ -129,6 +140,18 @@ namespace UBCopy
                     }
                 }
             }
+        }
+    }
+
+    public class FileToFolder
+    {
+        public string SourceFile { get; set; }
+        public string DestinationFolder { get; set; }
+
+        public FileToFolder(string sourceFile, string destinationFolder)
+        {
+            SourceFile = sourceFile;
+            DestinationFolder = destinationFolder;
         }
     }
 }

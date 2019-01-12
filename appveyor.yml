@@ -1,0 +1,14 @@
+version: 1.0.{build}
+skip_tags: true
+configuration: Release
+build:
+  verbosity: minimal
+artifacts:
+- path: UBCopy\bin\$(configuration)
+  name: UBCopy
+deploy:
+- provider: GitHub
+  auth_token:
+    secure: KmYWY9jz5FpXpKkxpQvthnDkZiMCi0tmh5PCs/83mu4vm0QsEThuEqhEgMViCbCJ
+  on:
+    branch: internal-usage

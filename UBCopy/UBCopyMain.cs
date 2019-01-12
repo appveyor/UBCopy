@@ -103,9 +103,9 @@ namespace UBCopy
                 }
 
                 sw.Stop();
-                Log.InfoFormat("Number of Byes Copied : {0}", UBCopySetup.BytesCopied);
-                Log.InfoFormat("Elapsed Seconds  : {0}", sw.ElapsedMilliseconds / 1000.00);
-                Log.Info("Done.");
+                Console.WriteLine ("Number of Bytes Copied : {0}", UBCopySetup.BytesCopied);
+                Console.WriteLine("Elapsed Seconds  : {0}", sw.ElapsedMilliseconds / 1000.00);
+                Console.WriteLine("Done.");
 #if DEBUG
                 {
                     Console.ReadKey();

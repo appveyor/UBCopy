@@ -44,6 +44,7 @@ namespace UBCopy
                 throw new Exception("Target cannot be empty");
 
             var inputIsFile = false;
+            UBCopySetup.Overwritedestination = overwrite;
             UBCopySetup.Buffersize = buffersize;
             UBCopySetup.Checksumfiles = checksum;
             UBCopySetup.Destinationfile = outputfile;
@@ -116,16 +117,16 @@ namespace UBCopy
 
             if (UBCopySetup.FileList.Count < numberthreads)
             {
-                numberthreads = UBCopySetup.FileList.Count;
+                numberthreads = UBCopySetup.FileToFolderList.Count;
             }
 
             if (inputIsFile)
                 numberthreads = 1;
 
-            Log.InfoFormat("Number of Files To Process: {0}", UBCopySetup.FileList.Count);
+            Console.WriteLine("Number of file to folder combinatins: {0}", UBCopySetup.FileToFolderList.Count);
             var sw = new Stopwatch();
             sw.Start();
-            var ftph = UBCopySetup.FileList.Count;
+            var ftph = UBCopySetup.FileToFolderList.Count;
 
             if (numberthreads == 1)
             {
@@ -153,7 +154,7 @@ namespace UBCopy
             {
                 var doneEvents = new ManualResetEvent[numberthreads];
                 var hashFilesArray = new UBCopyProcessor[numberthreads];
-                var ftp = UBCopySetup.FileList.Count;
+                var ftp = UBCopySetup.FileToFolderList.Count;
 
 
                 while (ftp > 0)
@@ -161,6 +162,9 @@ namespace UBCopy
                     // Configure and launch threads using ThreadPool:
                     if (ftp < numberthreads)
                         numberthreads = ftp;
+
+                    Console.WriteLine("Number of threads: " + numberthreads);
+
                     for (var i = 0; i < numberthreads; i++)
                     {
                         doneEvents[i] = new ManualResetEvent(false);
@@ -171,7 +175,7 @@ namespace UBCopy
 
                     // Wait for all threads in pool to finished processing
                     WaitHandle.WaitAll(doneEvents);
-                    ftp = UBCopySetup.FileList.Count;
+                    ftp = UBCopySetup.FileToFolderList.Count;
                 }
             }
             sw.Stop();

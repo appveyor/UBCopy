@@ -36,18 +36,22 @@ namespace UBCopy
         /// </summary>
         private static void UBCopyFile()
         {
-            string file;
+
+            FileToFolder fileToFolder;
+
             lock (UBCopySetup.DictonaryLocker)
             {
-                file = UBCopySetup.FileList.Pop();
-                Log.DebugFormat("POP FILE: {0}", file);
+
+                fileToFolder = UBCopySetup.FileToFolderList.Pop();
+                Log.DebugFormat("POP FILE: {0} TO FOLDER {1}", fileToFolder.SourceFile, fileToFolder.DestinationFolder);
             }
-            if (String.IsNullOrEmpty(file))
+            if (fileToFolder == null)
             {
                 throw new Exception("File Name Cannot Be Null");
             }
-            var destinationfile = Path.Combine(UBCopySetup.Destinationfile, file.Replace(Path.GetPathRoot(file), ""));
-            var fileSize = new FileInfo(file);
+            //var destinationfile = Path.Combine(UBCopySetup.Destinationfile, file.Replace(Path.GetPathRoot(file), ""));
+            var destinationfile = Path.Combine(fileToFolder.DestinationFolder, Path.GetFileName(fileToFolder.SourceFile));
+            var fileSize = new FileInfo(fileToFolder.SourceFile);
 
             Log.DebugFormat("File Size: {0}", fileSize.Length);
             lock (Locker)
@@ -57,14 +61,14 @@ namespace UBCopy
             if (fileSize.Length < UBCopySetup.SynchronousFileCopySize)
             {
                 var asyncUnbufferedCopy = new AsyncUnbuffCopy();
-                asyncUnbufferedCopy.AsyncCopyFileUnbuffered(file, destinationfile, UBCopySetup.Overwritedestination,
+                asyncUnbufferedCopy.AsyncCopyFileUnbuffered(fileToFolder.SourceFile, destinationfile, UBCopySetup.Overwritedestination,
                                                             UBCopySetup.Movefile,
                                                             UBCopySetup.Checksumfiles, UBCopySetup.Buffersize,
                                                             UBCopySetup.Reportprogres,UBCopySetup.BytesSecond);
             }
             else
             {
-                AsyncUnbuffCopyStatic.AsyncCopyFileUnbuffered(file, destinationfile, UBCopySetup.Overwritedestination,
+                AsyncUnbuffCopyStatic.AsyncCopyFileUnbuffered(fileToFolder.SourceFile, destinationfile, UBCopySetup.Overwritedestination,
                                                             UBCopySetup.Movefile,
                                                             UBCopySetup.Checksumfiles, UBCopySetup.Buffersize,
                                                             UBCopySetup.Reportprogres, UBCopySetup.BytesSecond);
