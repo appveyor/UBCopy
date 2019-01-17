@@ -38,7 +38,7 @@ namespace UBCopy
         private static readonly ILog Log = LogManager.GetLogger(typeof(UBCopyHandler));
 
         public static int ProcessFiles(string inputfile, string outputfile, bool overwrite, bool movefile, bool checksum, int buffersize, 
-            bool reportprogress, int numberthreads, int synchronousFileCopySize, int bytesSecond)
+            bool reportprogress, int numberthreads, int synchronousFileCopySize, int bytesSecond, string exclusionlist)
         {
             if (string.IsNullOrEmpty(outputfile))
                 throw new Exception("Target cannot be empty");
@@ -52,6 +52,7 @@ namespace UBCopy
             UBCopySetup.Reportprogres = reportprogress;
             UBCopySetup.SynchronousFileCopySize = synchronousFileCopySize * 1024 * 1024;
             UBCopySetup.BytesSecond = bytesSecond;
+            UBCopySetup.Exclusionlist = exclusionlist;
             try
             {
                 // get the file attributes for file or directory

@@ -41,6 +41,7 @@ namespace UBCopy
         //hold command line options
         private static string _sourcefile;
         private static string _destinationfile;
+        private static string _exclusionlist;
         private static bool _overwritedestination = true;
         //we set an inital buffer size to be on the safe side.
         private static int _buffersize = 16;
@@ -91,7 +92,7 @@ namespace UBCopy
                 {
                     UBCopyHandler.ProcessFiles(_sourcefile, _destinationfile, _overwritedestination,
                                                             _movefile,
-                                                            _checksumfiles, _buffersize, _reportprogres, _threads, _smallfilesize,_bytessecond);
+                                                            _checksumfiles, _buffersize, _reportprogres, _threads, _smallfilesize, _bytessecond, _exclusionlist);
                 }
                 catch (Exception ex)
                 {
@@ -143,6 +144,9 @@ namespace UBCopy
 
                           { "d:|destinationfile:", "The target file you wish to write",
                           v => _destinationfile = v},
+
+                          { "e:|exclusionlist:", "Comma-separated list of files not to copy",
+                          v => _exclusionlist = v},
 
                           { "o:|overwritedestination:", "True if you want to overwrite the destination file if it exists",
                           (bool v) => _overwritedestination = v},

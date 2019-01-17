@@ -28,6 +28,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using log4net;
 
 namespace UBCopy
@@ -54,7 +55,7 @@ namespace UBCopy
         public static int BytesSecond;
         public static bool ForceCopy;
         public static bool SyncFolders;
-
+        public static string Exclusionlist;
         public static bool Listlocked;
 
         public static readonly object DictonaryLocker = new object();
@@ -66,6 +67,8 @@ namespace UBCopy
         {
             string[] destinationFolderList = Destinationfile.Contains(",") || Destinationfile.Contains(";") ? Destinationfile.Split(new char[] { ',', ';' }, StringSplitOptions.RemoveEmptyEntries)
                 : new string[] { Destinationfile };
+
+            string[] exclusionlist = Exclusionlist != null ? Exclusionlist.Split(new char[] { ',', ';' }, StringSplitOptions.RemoveEmptyEntries).Select(f => f.Trim()).ToArray() : null;
 
             var dirs = new Stack<string>(20);
 
@@ -116,6 +119,11 @@ namespace UBCopy
 
                 foreach (var file in files)
                 {
+                    if (exclusionlist!= null && exclusionlist.Contains(Path.GetFileName(file), StringComparer.OrdinalIgnoreCase))
+                    {
+                        continue;
+                    }
+
                     if (file.Length < 261)
                     {
                         try
