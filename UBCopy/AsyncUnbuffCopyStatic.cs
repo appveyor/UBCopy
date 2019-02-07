@@ -221,7 +221,7 @@ namespace UBCopy
                         if ((percent - currentPercent) >= 1)
                         {
                             currentPercent = percent;
-                            Console.Write("\r{0}% ({1})", currentPercent, _outputfile);
+                            Console.WriteLine("\r{0}% ({1})", currentPercent, _outputfile);
                         }
                     }
                 }

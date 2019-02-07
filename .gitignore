@@ -22,3 +22,8 @@ UpgradeLog.XML
 _UpgradeReport_Files/UpgradeReport.xslt
 _UpgradeReport_Files/UpgradeReport_Minus.gif
 _UpgradeReport_Files/UpgradeReport_Plus.gif
+.vs/UBCopy/v15/Server/sqlite3/db.lock
+.vs/UBCopy/v15/Server/sqlite3/storage.ide
+.vs/UBCopy/v15/Server/sqlite3/storage.ide-shm
+.vs/UBCopy/v15/Server/sqlite3/storage.ide-wal
+UBCopy/UBCopy.csproj.user
