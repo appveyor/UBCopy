@@ -215,7 +215,7 @@ namespace UBCopy
                     Monitor.PulseAll(Locker1);
                     //fancy dan in place percent update on each write.
 
-                    if (_reportprogress && !IsDebugEnabled)
+                    if (_reportprogress)
                     {
                         int percent = (int)Math.Round((float)_totalbyteswritten / (float)_infilesize * 100);
                         if ((percent - currentPercent) >= 1)
